@@ -1,4 +1,4 @@
-package com.example.video_call.user.services;
+package com.example.video_call.services;
 
 import com.example.video_call.user.User;
 import org.springframework.stereotype.Service;
