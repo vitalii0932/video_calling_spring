@@ -39,4 +39,8 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         USERS_LIST.remove(USERS_LIST.get(userId));
     }
+
+    public List<User> findAll() {
+        return USERS_LIST;
+    }
 }
