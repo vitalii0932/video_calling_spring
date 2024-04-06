@@ -31,4 +31,12 @@ public class UserService {
         user.setStatus("online");
         return connectedUser;
     }
+
+    public void logout(String email) {
+        var userId = IntStream.range(0, USERS_LIST.size())
+                .filter(i -> USERS_LIST.get(i).getEmail().equals(email))
+                .findAny()
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        USERS_LIST.remove(USERS_LIST.get(userId));
+    }
 }
