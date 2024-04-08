@@ -1,7 +1,5 @@
-package com.example.video_call.controllers;
+package com.example.video_call.user;
 
-import com.example.video_call.user.User;
-import com.example.video_call.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -11,32 +9,33 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
-@Slf4j
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
+@Slf4j
 public class UserController {
-    private final UserService userService;
+
+    private final UserService service;
 
     @PostMapping
-    public void register(User user) {
-        userService.register(user);
+    public void register(@RequestBody User user) {
+        service.register(user);
     }
 
     @PostMapping("/login")
-    public User login(User user) {
-        return userService.login(user);
+    public User login(@RequestBody User user) {
+        return service.login(user);
     }
 
     @PostMapping("/logout")
-    public void logout(String email) {
-        userService.logout(email);
+    public void logout(@RequestBody User email) {
+        service.logout(email.getEmail());
     }
 
     @GetMapping
     public List<User> findAll() {
-        return userService.findAll();
+        return service.findAll();
     }
 
     @ExceptionHandler(Exception.class)

@@ -1,7 +1,7 @@
 package com.example.video_call;
 
 import com.example.video_call.user.User;
-import com.example.video_call.services.UserService;
+import com.example.video_call.user.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,7 +22,7 @@ public class VideoCallApplication {
 			userService.register(User.builder()
 							.userName("Vetal")
 							.email("vitalikhall@gmail.com")
-							.password("supersecret!")
+							.password("123")
 					.build());
 
 			userService.register(User.builder()

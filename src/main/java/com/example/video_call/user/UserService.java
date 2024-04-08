@@ -1,6 +1,5 @@
-package com.example.video_call.services;
+package com.example.video_call.user;
 
-import com.example.video_call.user.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,35 +8,33 @@ import java.util.stream.IntStream;
 
 @Service
 public class UserService {
+
     private static final List<User> USERS_LIST = new ArrayList<>();
 
     public void register(User user) {
-        if(USERS_LIST.stream().anyMatch(someUser -> someUser.getEmail().equals(user.getEmail()) || someUser.getStatus().equals("online"))) {
-            throw new RuntimeException("The user with this email is registered in the system");
-        }
         user.setStatus("online");
         USERS_LIST.add(user);
     }
 
     public User login(User user) {
-        var userId = IntStream.range(0, USERS_LIST.size())
+        var userIndex = IntStream.range(0, USERS_LIST.size())
                 .filter(i -> USERS_LIST.get(i).getEmail().equals(user.getEmail()))
                 .findAny()
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        var connectedUser = USERS_LIST.get(userId);
+        var connectedUser = USERS_LIST.get(userIndex);
         if (!connectedUser.getPassword().equals(user.getPassword())) {
             throw new RuntimeException("Password incorrect");
         }
-        user.setStatus("online");
+        connectedUser.setStatus("online");
         return connectedUser;
     }
 
     public void logout(String email) {
-        var userId = IntStream.range(0, USERS_LIST.size())
+        var userIndex = IntStream.range(0, USERS_LIST.size())
                 .filter(i -> USERS_LIST.get(i).getEmail().equals(email))
                 .findAny()
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        USERS_LIST.get(userId).setStatus("offline");
+        USERS_LIST.get(userIndex).setStatus("offline");
     }
 
     public List<User> findAll() {
