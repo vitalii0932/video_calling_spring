@@ -12,7 +12,7 @@ public class UserService {
     private static final List<User> USERS_LIST = new ArrayList<>();
 
     public void register(User user) {
-        if(USERS_LIST.stream().anyMatch(someUser -> someUser.getEmail().equals(user.getEmail()))) {
+        if(USERS_LIST.stream().anyMatch(someUser -> someUser.getEmail().equals(user.getEmail()) || someUser.getStatus().equals("online"))) {
             throw new RuntimeException("The user with this email is registered in the system");
         }
         user.setStatus("online");
@@ -37,7 +37,7 @@ public class UserService {
                 .filter(i -> USERS_LIST.get(i).getEmail().equals(email))
                 .findAny()
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        USERS_LIST.remove(USERS_LIST.get(userId));
+        USERS_LIST.get(userId).setStatus("offline");
     }
 
     public List<User> findAll() {
